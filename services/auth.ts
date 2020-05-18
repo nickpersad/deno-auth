@@ -70,14 +70,14 @@ export default async ({
             response.body = { msg: "Incorrect user data. Name and password are required" };
             return;
         }
-        switch (request.url.pathname) {
-            case "/signin":
+        switch (request.url.pathname.split("/")[2]) {
+            case "signin":
                 obj = await signin(username, password);
                 break;
-            case "/signup":
+            case "signup":
                 obj = await signup(username, password);
                 break;
-            case "/signout":
+            case "signout":
                 obj = await signout(username);
                 break;
         }

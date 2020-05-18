@@ -6,8 +6,8 @@ const router = new Router();
 
 router
   .get("*", notFound)
-  .post("/signin", auth)
-  .post("/signup", auth)
-  .post("/signout", auth);
+  .post("/api/signin", auth)
+  .post("/api/signup", auth)
+  .post("/api/signout", auth);
 
 export default router;

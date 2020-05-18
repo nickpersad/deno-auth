@@ -14,7 +14,7 @@ cd deno-auth
 #Copy default config file and add your config variables
 cp config.default.ts config.ts
 #Run Deno, downloading any dependencies needed to cache
-make
+make (or deno -A --unstable index.ts)
 ```
 
 Your app should now be running on [localhost:4000](http://localhost:4000/) or whatever you set in config.ts.

@@ -1,0 +1,6 @@
+# Debug
+.deno_plugins
+
+# Configurations
+.env
+config.ts

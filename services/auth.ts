@@ -26,25 +26,42 @@ const signin = async (username: string, password: string) => {
 const signup = async (username: string, password: string) => {
     const users = _db.collection("users");
     try {
-        return await users.insertOne({
+        const response = await users.insertOne({
             username,
             password
         });
+        return { success: true, id: response.id };
     } catch (e) {
         return { success: false, msg: e };
     }
 };
 
 const signout = async (username: string) => {
-    const users = _db.collection("users");
+    const sessions = _db.collection("sessions");
     try {
-        return await users.deleteOne({
+        const response = await sessions.deleteOne({
             username
         });
+        if (response.deletedCount === 1) {
+            return { success: true, msg: `Session for ${username} removed.` };
+          }
+          return { success: false, msg: `Session for ${username} was not removed.` };
     } catch (e) {
         return { success: false, msg: e };
     }
 };
+
+const createSession = async (username: any) => {
+    const sessions = _db.collection("sessions");
+    try {
+        const response = await sessions.insertOne({
+            username
+        });
+        return { success: true, id: response.id };
+    } catch (e) {
+        return { success: false, msg: e };
+    }
+  }
 
 export default async ({
     request,
@@ -73,6 +90,9 @@ export default async ({
         switch (request.url.pathname.split("/")[2]) {
             case "signin":
                 obj = await signin(username, password);
+                if (obj.success) {
+                    return await createSession(username);
+                }
                 break;
             case "signup":
                 obj = await signup(username, password);

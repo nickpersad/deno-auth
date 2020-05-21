@@ -44,8 +44,8 @@ const signout = async (username: string) => {
         });
         if (response.deletedCount === 1) {
             return { success: true, msg: `Session for ${username} removed.` };
-          }
-          return { success: false, msg: `Session for ${username} was not removed.` };
+        }
+        return { success: false, msg: `Session for ${username} was not removed.` };
     } catch (e) {
         return { success: false, msg: e };
     }
@@ -61,7 +61,7 @@ const createSession = async (username: any) => {
     } catch (e) {
         return { success: false, msg: e };
     }
-  }
+}
 
 export default async ({
     request,
@@ -100,6 +100,8 @@ export default async ({
             case "signout":
                 obj = await signout(username);
                 break;
+            default:
+                obj = { success: false, msg: `API endpoint doesn't exist` };
         }
     } catch (e) {
         obj = { success: false, msg: e };

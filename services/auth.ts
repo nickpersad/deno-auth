@@ -1,7 +1,7 @@
 import { Request, Response } from "https://deno.land/x/oak/mod.ts";
 import { mongo } from "./mongo.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
-import { ObjectId } from "https://deno.land/x/mongo@v0.6.0/mod.ts";
+import uniq from "https://deno.land/x/vuniq/mod.ts"
 
 // start mongo instance
 const _db = await mongo();
@@ -24,9 +24,12 @@ const signin = async (username: string, password: string) => {
 };
 
 const signup = async (username: string, password: string) => {
+    const objectId = uniq(24);
     const users = _db.collection("users");
     try {
         const response = await users.insertOne({
+            _id: objectId,
+            id: objectId,
             username,
             password
         });

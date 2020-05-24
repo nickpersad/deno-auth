@@ -92,16 +92,32 @@ export default async ({
         }
         switch (request.url.pathname.split("/")[2]) {
             case "signin":
-                obj = await signin(username, password);
-                if (obj.success) {
-                    return await createSession(username);
+                try {
+                    obj = await signin(username, password);
+                    if (obj.success) {
+                        try {
+                            obj = await createSession(username);
+                        } catch (e) {
+                            obj = {success: false, msg: e}
+                        }
+                    }
+                    break;
+                } catch (e) {
+                    return { success: false, msg: e }
+                }
+            case "signup":
+                try {
+                    obj = await signup(username, password);
+                } catch (e) {
+                    obj = { success: false, msg: e }
                 }
                 break;
-            case "signup":
-                obj = await signup(username, password);
-                break;
             case "signout":
-                obj = await signout(username);
+                try {
+                    obj = await signout(username);
+                } catch (e) {
+                    obj = { success: false, msg: e }
+                }
                 break;
             default:
                 obj = { success: false, msg: `API endpoint doesn't exist` };

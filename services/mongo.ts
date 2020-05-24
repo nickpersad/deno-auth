@@ -1,5 +1,5 @@
 // import { init, MongoClient } from "https://deno.land/x/mongo@v0.6.0/mod.ts";
-import { MongoClient } from "https://github.com/nickpersad/deno_mongo/raw/master/mod.ts"; // forked version
+import { MongoClient } from "https://github.com/nickpersad/deno_mongo/raw/D_26_IncorrectPanick/mod.ts"; // forked version
 import { MONGO_URI } from "../config.ts";
 
 let _db: any;

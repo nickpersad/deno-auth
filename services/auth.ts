@@ -6,13 +6,13 @@ import uniq from "https://deno.land/x/vuniq/mod.ts"
 // start mongo instance
 const _db = await mongo();
 
-const salt = bcrypt.gensalt(10);
+const salt = bcrypt.genSalt(10);
 
 const signin = async (username: string, password: string) => {
     const users = _db.collection("users");
     try {
         const doc = await users.findOne({ username });
-        const match = bcrypt.checkpw(password, doc.password);
+        const match = bcrypt.compare(password, doc.password);
 
         if (match) {
             return { success: true };
